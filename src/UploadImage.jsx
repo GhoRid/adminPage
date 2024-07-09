@@ -40,6 +40,7 @@ const UploadImage = ({ name, password }) => {
     },
     onError: (err) => {
       console.log(err);
+      alert("이미지 업로드에 실패했습니다.");
     },
   });
 
