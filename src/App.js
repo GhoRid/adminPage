@@ -1,24 +1,133 @@
-import logo from './logo.svg';
-import './App.css';
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import styled from "styled-components";
+import { updateImage } from "./apis/post";
+import UploadImage from "./UploadImage";
+
+const Layout = styled.div`
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Title = styled.div`
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 50px;
+`;
+
+const InputBox = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 50px;
+`;
+
+const NameInput = styled.input`
+  width: 500px;
+  height: 100px;
+  padding: 12px;
+  color: black;
+  background-color: white;
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 8px;
+  outline: none;
+
+  &::placeholder {
+    color: black;
+  }
+`;
+
+const PasswordInput = styled.input`
+  width: 500px;
+  height: 100px;
+  padding: 12px;
+  color: black;
+  background-color: white;
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 8px;
+  outline: none;
+
+  &::placeholder {
+    color: black;
+  }
+`;
 
 function App() {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const ALLOWED_TEXT_REG_EXP = /^[a-z|A-Z|가-힣|ㄱ-ㅎ|ㅏ-ㅣ|0-9| \t|]+$/;
+  // const NOT_ALLOWED_TEXT_REG_EXP = /[{}[\]/?.;:|)*~`!^\\\-_+<>@#$%&=('"₩€£¥•“’‘]/;
+
+  const handleNameChange = (e) => {
+    const newName = e.target.value;
+    if (!ALLOWED_TEXT_REG_EXP.test(newName)) {
+      setName("");
+      return;
+    }
+    setName(newName);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.code !== "Enter" && e.code !== "NumpadEnter") {
+      return;
+    }
+    e.preventDefault();
+  };
+
+  const handlePasswordChange = (e) => {
+    const newName = e.target.value;
+    if (!ALLOWED_TEXT_REG_EXP.test(newName)) {
+      setPassword("");
+      return;
+    }
+    setPassword(newName);
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: updateImage,
+    onSuccess: (res) => {
+      console.log(res);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Title>관리자 사진 등록 페이지</Title>
+      <InputBox>
+        <NameInput
+          id="name"
+          value={name}
+          placeholder="가게 이름"
+          onChange={handleNameChange}
+          onKeyDown={handleKeyDown}
+          type="text"
+          maxLength={12}
+          required
+        ></NameInput>
+      </InputBox>
+      <InputBox>
+        <PasswordInput
+          id="password"
+          value={password}
+          placeholder="비밀번호"
+          onChange={handlePasswordChange}
+          onKeyDown={handleKeyDown}
+          type="password"
+          // maxLength={12}
+          required
+        ></PasswordInput>
+      </InputBox>
+      <UploadImage name={name} password={password} />
+    </Layout>
   );
 }
 
