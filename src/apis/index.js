@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const instance = axios.create({
   baseURL: "https://blueseat.site/imgapi/storeimg",
-  timeout: 3000,
+  timeout: 5000,
   headers: {
     "Content-Type": "multipart/form-data",
   },

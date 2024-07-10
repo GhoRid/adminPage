@@ -5,7 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 
 const ImageDiv = styled.div`
   border: 1px dashed black;
-  width: 500px;
+  max-width: 500px;
+  width: 80%;
   height: 300px;
   border-radius: 8px;
   display: flex;
@@ -39,8 +40,8 @@ const UploadImage = ({ name, password }) => {
   const { mutate } = useMutation({
     mutationFn: updateImage,
     onSuccess: (res) => {
-      console.log(res);
-      alert("이미지 업로드에 성공했습니다.");
+      const response = res.data;
+      alert(response);
     },
     onError: (err) => {
       console.log(err);

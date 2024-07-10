@@ -1,7 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import styled from "styled-components";
-import { updateImage } from "./apis/post";
 import UploadImage from "./UploadImage";
 
 const Layout = styled.div`
@@ -23,10 +21,12 @@ const InputBox = styled.form`
   flex-direction: column;
   gap: 8px;
   margin-bottom: 50px;
+  max-width: 500px;
+  width: 80%;
 `;
 
 const NameInput = styled.input`
-  width: 500px;
+  width: 100%;
   height: 100px;
   padding: 12px;
   color: black;
@@ -42,7 +42,7 @@ const NameInput = styled.input`
 `;
 
 const PasswordInput = styled.input`
-  width: 500px;
+  width: 100%;
   height: 100px;
   padding: 12px;
   color: black;
