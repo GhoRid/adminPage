@@ -62,7 +62,6 @@ function App() {
   const [password, setPassword] = useState("");
 
   const ALLOWED_TEXT_REG_EXP = /^[a-z|A-Z|가-힣|ㄱ-ㅎ|ㅏ-ㅣ|0-9| \t|]+$/;
-  // const NOT_ALLOWED_TEXT_REG_EXP = /[{}[\]/?.;:|)*~`!^\\\-_+<>@#$%&=('"₩€£¥•“’‘]/;
 
   const handleNameChange = (e) => {
     const newName = e.target.value;
@@ -89,16 +88,6 @@ function App() {
     setPassword(newName);
   };
 
-  const { mutate } = useMutation({
-    mutationFn: updateImage,
-    onSuccess: (res) => {
-      console.log(res);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
   return (
     <Layout>
       <Title>관리자 사진 등록 페이지</Title>
@@ -110,7 +99,6 @@ function App() {
           onChange={handleNameChange}
           onKeyDown={handleKeyDown}
           type="text"
-          maxLength={12}
           required
         ></NameInput>
       </InputBox>
@@ -122,7 +110,6 @@ function App() {
           onChange={handlePasswordChange}
           onKeyDown={handleKeyDown}
           type="password"
-          // maxLength={12}
           required
         ></PasswordInput>
       </InputBox>

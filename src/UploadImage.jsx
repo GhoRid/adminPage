@@ -14,9 +14,7 @@ const ImageDiv = styled.div`
   flex-direction: column;
 `;
 
-const ImageInput = styled.input`
-  /* display: none; */
-`;
+const ImageInput = styled.input``;
 
 const Image = styled.img`
   width: auto;
@@ -28,6 +26,11 @@ const Button = styled.button`
   height: 50px;
   border: 1px solid black;
   margin-top: 20px;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
 `;
 
 const UploadImage = ({ name, password }) => {
@@ -37,6 +40,7 @@ const UploadImage = ({ name, password }) => {
     mutationFn: updateImage,
     onSuccess: (res) => {
       console.log(res);
+      alert("이미지 업로드에 성공했습니다.");
     },
     onError: (err) => {
       console.log(err);
@@ -65,11 +69,10 @@ const UploadImage = ({ name, password }) => {
     ).then((res) => res.blob());
 
     const formData = new FormData();
-    // Blob 객체를 FormData에 추가
 
-    formData.append("membername", name); // "profile.jpg"는 서버에서 요구하는 파일명에 따라 바꿔야 할 수도 있습니다.
-    formData.append("memberpassword", password); // "profile.jpg"는 서버에서 요구하는 파일명에 따라 바꿔야 할 수도 있습니다.
-    formData.append("img", imageBlob, "img.jpg"); // "profile.jpg"는 서버에서 요구하는 파일명에 따라 바꿔야 할 수도 있습니다.
+    formData.append("membername", name);
+    formData.append("memberpassword", password);
+    formData.append("img", imageBlob, "img.jpg");
 
     // PATCH 요청 보내기
     mutate(formData);
@@ -86,6 +89,7 @@ const UploadImage = ({ name, password }) => {
         onClick={() => {
           handleImgUpload(uploadImg);
         }}
+        disabled={!uploadImg || !name || !password}
       >
         보내기
       </Button>
